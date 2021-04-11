@@ -25,7 +25,6 @@ Resources:
       - APIBucket
   RestAPI:
     Type: AWS::ApiGateway::RestApi
-    Name: RestAPI
     BodyS3Location:
       Bucket: 'jcnix-api-dev'
       Key: 'swagger.yml'
