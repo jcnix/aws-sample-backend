@@ -1,0 +1,39 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: aws-sample
+basePath: /
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /version:
+    get:
+      description: Returns version
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/HelloWorldResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /swagger:
+    x-swagger-pipe: swagger_raw
+definitions:
+  version:
+    required:
+      - apiversion
+    properties:
+      apiversion:
+        type: string
+  ErrorResponse:
+    required:
+      - errorcode
+    properties:
+      errorcode:
+        type: string
