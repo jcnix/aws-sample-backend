@@ -28,7 +28,7 @@ Resources:
     Properties:
       BodyS3Location:
         Bucket: 'jcnix-api-dev'
-        Key: 'swagger.yml'
+        Key: 'swagger.yaml'
     DependsOn:
       - APIBucket
       
