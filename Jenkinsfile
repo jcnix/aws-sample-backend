@@ -3,7 +3,13 @@ pipeline {
         label 'build'
     }
     stages {
-        
+        stage('verify') {
+            steps {
+                sh '''
+                    npm run verify
+                '''
+            }
+        }
         stage('deploy') {
             steps {
                 sh '''

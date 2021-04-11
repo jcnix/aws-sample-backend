@@ -17,7 +17,7 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/HelloWorldResponse"
+            $ref: "#/definitions/VersionResponse"
         default:
           description: Error
           schema:
@@ -25,7 +25,7 @@ paths:
   /swagger:
     x-swagger-pipe: swagger_raw
 definitions:
-  version:
+  VersionResponse:
     required:
       - apiversion
     properties:
