@@ -25,6 +25,8 @@ Resources:
   LambdaRole:
     Type: 'AWS::IAM::Role'
     Properties:
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AWSLambdaExecute
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -35,10 +37,6 @@ Resources:
             Action:
               - 'sts:AssumeRole'
       Path: /
-      Policies:
-        - PolicyName: lambda
-          ManagedPolicyArns:
-            - arn:aws:iam::aws:policy/AWSLambdaExecute
   Application:
     Type: AWS::Lambda::Function
     Properties:
