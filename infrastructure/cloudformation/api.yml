@@ -1,4 +1,3 @@
-
 Resources:
   APIBucket:
     Type: AWS::S3::Bucket
@@ -31,4 +30,9 @@ Resources:
         Key: 'swagger.yaml'
     DependsOn:
       - APIBucket
-      
+  ProdDeployment:
+    Type: AWS::ApiGateway::Deployment
+    Properties:
+      RestApiId: !Ref RestAPI
+      Description: Prod Deployment
+      StageName: ProdStage
