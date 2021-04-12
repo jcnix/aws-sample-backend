@@ -22,11 +22,35 @@ Resources:
               AWS: 'arn:aws:iam::965128151894:user/jenkins'
     DependsOn:
       - APIBucket
-  RestAPI:
-    Type: AWS::ApiGateway::RestApi
+  LambdaRole:
+    Type: 'AWS::IAM::Role'
     Properties:
-      BodyS3Location:
-        Bucket: 'jcnix-api-dev'
-        Key: 'swagger.yaml'
-    DependsOn:
-      - APIBucket
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Path: /
+      Policies:
+        - PolicyName: lambda
+          ManagedPolicyArns:
+            - arn:aws:iam::aws:policy/AWSLambdaExecute
+  RootInstanceProfile:
+    Type: 'AWS::IAM::InstanceProfile'
+    Properties:
+      Path: /
+      Roles:
+        - !Ref RootRole
+    Application:
+      Type: AWS::Lambda::Function
+      Properties:
+        Runtime: nodejs14.x
+        Role: arn:aws:iam::965128151894:role/lambda-role
+        Handler: index.handler
+        Code:
+          S3Bucket: 'jcnix-api-dev'
+          S3Key: 'api.zip'
