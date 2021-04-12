@@ -6,7 +6,7 @@ pipeline {
         stage('create lambda stack') {
             steps {
                 sh '''
-                    aws cloudformation deploy --template-file infrastructure/cloudformation/lambda.yml --stack-name api-lambda --capabilities CAPABILITY_IAM
+                    aws cloudformation deploy --template-file infrastructure/cloudformation/lambda.yml --stack-name api-lambda --capabilities CAPABILITY_NAMED_IAM
                 '''
             }
         }
