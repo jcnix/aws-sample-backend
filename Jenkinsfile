@@ -20,7 +20,8 @@ pipeline {
         stage('deploy') {
             steps {
                 sh '''
-                    aws s3 sync swagger s3://jcnix-api-dev --delete --acl bucket-owner-full-control
+                    zip api.zip src/index.js
+                    aws s3 sync api.zip s3://jcnix-api-dev --delete --acl bucket-owner-full-control
                 '''
             }
         }

@@ -1,0 +1,14 @@
+pipeline {
+    agent {
+        label 'build'
+    }
+    stages {
+        stage('create lambda stack') {
+            steps {
+                sh '''
+                    aws cloudformation deploy --template-file infrastructure/cloudformation/lambda.yml --stack-name api-bucket --capabilities CAPABILITY_IAM
+                '''
+            }
+        }
+    }
+}

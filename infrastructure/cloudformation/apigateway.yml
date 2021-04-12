@@ -1,0 +1,8 @@
+RestAPI:
+  Type: AWS::ApiGateway::RestApi
+  Properties:
+    BodyS3Location:
+      Bucket: 'jcnix-api-dev'
+      Key: 'swagger.yaml'
+  DependsOn:
+    - APIBucket
