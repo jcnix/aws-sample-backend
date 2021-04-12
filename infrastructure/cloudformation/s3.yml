@@ -5,6 +5,8 @@ Resources:
       BucketName: 'jcnix-api-dev'
   APIBucketPolicy:
     Type: AWS::S3::BucketPolicy
+    DependsOn:
+      - APIBucket
     Properties:
       Bucket: 'jcnix-api-dev'
       PolicyDocument:
@@ -20,5 +22,3 @@ Resources:
               - 'arn:aws:s3:::jcnix-api-dev/*'
             Principal: 
               AWS: 'arn:aws:iam::965128151894:user/jenkins'
-    DependsOn:
-      - APIBucket
