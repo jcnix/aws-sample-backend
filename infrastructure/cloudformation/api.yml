@@ -39,18 +39,12 @@ Resources:
         - PolicyName: lambda
           ManagedPolicyArns:
             - arn:aws:iam::aws:policy/AWSLambdaExecute
-  RootInstanceProfile:
-    Type: 'AWS::IAM::InstanceProfile'
+  Application:
+    Type: AWS::Lambda::Function
     Properties:
-      Path: /
-      Roles:
-        - !Ref RootRole
-    Application:
-      Type: AWS::Lambda::Function
-      Properties:
-        Runtime: nodejs14.x
-        Role: arn:aws:iam::965128151894:role/lambda-role
-        Handler: index.handler
-        Code:
-          S3Bucket: 'jcnix-api-dev'
-          S3Key: 'api.zip'
+      Runtime: nodejs14.x
+      Role: arn:aws:iam::965128151894:role/lambda-role
+      Handler: index.handler
+      Code:
+        S3Bucket: 'jcnix-api-dev'
+        S3Key: 'api.zip'
