@@ -1,4 +1,27 @@
 Resources:
+  APIBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: 'jcnix-api-dev'
+  APIBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    DependsOn:
+      - APIBucket
+    Properties:
+      Bucket: 'jcnix-api-dev'
+      PolicyDocument:
+        Statement:
+          - Sid: 'Allow Jenkins to upload'
+            Action:
+              - 's3:List*'
+              - 's3:Put*'
+              - 's3:Delete*'
+            Effect: Allow
+            Resource: 
+              - 'arn:aws:s3:::jcnix-api-dev'
+              - 'arn:aws:s3:::jcnix-api-dev/*'
+            Principal: 
+              AWS: 'arn:aws:iam::965128151894:user/jenkins'
   LambdaRole:
     Type: 'AWS::IAM::Role'
     Properties:
@@ -23,6 +46,4 @@ Resources:
       Runtime: nodejs14.x
       Role: arn:aws:iam::965128151894:role/lambda-role
       Handler: index.handler
-      Code:
-        S3Bucket: 'jcnix-api-dev'
-        S3Key: 'api.zip'
+      Code: '../../src'
