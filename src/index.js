@@ -1,3 +1,3 @@
-function handler() {
-    return 'hello world';
+export function handler(event, context, callback) {
+    return callback('hello world');
 }
