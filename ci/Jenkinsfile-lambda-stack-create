@@ -3,17 +3,17 @@ pipeline {
         label 'build'
     }
     stages {
-        stage('package') {
+        stage('package lambda') {
             steps {
                 sh '''
                     aws cloudformation package --template-file infrastructure/cloudformation/lambda.yml --s3-bucket jcnix-api-dev --output-template infrastructure/cloudformation/lambda-package.yml
                 '''
             }
         }
-        stage('create s3 stack') {
+        stage('deploy lambda') {
             steps {
                 sh '''
-                    aws cloudformation deploy --template-file infrastructure/cloudformation/lambda-package.yml --stack-name api-bucket
+                    aws cloudformation deploy --template-file infrastructure/cloudformation/lambda-package.yml --stack-name api-bucket --capabilities CAPABILITY_NAMED_IAM
                 '''
             }
         }
