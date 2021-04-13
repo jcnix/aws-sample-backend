@@ -17,11 +17,17 @@ pipeline {
                 '''
             }
         }
-        stage('deploy') {
+        stage('package lambda') {
             steps {
                 sh '''
-                    zip api.zip src/index.js
-                    aws s3 sync api.zip s3://jcnix-api-dev --delete --acl bucket-owner-full-control
+                    aws cloudformation package --template-file infrastructure/cloudformation/lambda.yml --s3-bucket jcnix-api-dev --output-template infrastructure/cloudformation/lambda-package.yml
+                '''
+            }
+        }
+        stage('deploy lambda') {
+            steps {
+                sh '''
+                    aws cloudformation deploy --template-file infrastructure/cloudformation/lambda-package.yml --stack-name api-bucket --capabilities CAPABILITY_NAMED_IAM
                 '''
             }
         }

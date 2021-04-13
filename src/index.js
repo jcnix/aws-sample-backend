@@ -1,3 +1,7 @@
-export function handler(event, context, callback) {
+function handler(event, context, callback) {
     return callback('hello world');
+}
+
+module.exports = {
+    handler
 }
