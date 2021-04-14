@@ -23,6 +23,7 @@
     "webpack-cli": "^4.6.0"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "4.17.1",
+    "serverless-http": "2.7.0"
   }
 }
