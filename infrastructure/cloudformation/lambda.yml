@@ -46,5 +46,5 @@ Resources:
       FunctionName: pizza-api
       Runtime: nodejs14.x
       Role: arn:aws:iam::965128151894:role/lambda-role
-      Handler: index.handler
+      Handler: app.handler
       Code: '../../bin'
