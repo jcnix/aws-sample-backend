@@ -20,6 +20,7 @@ pipeline {
         stage('package lambda') {
             steps {
                 sh '''
+                    npm run build
                     aws cloudformation package --template-file infrastructure/cloudformation/lambda.yml --s3-bucket jcnix-api-dev --output-template infrastructure/cloudformation/lambda-package.yml
                 '''
             }

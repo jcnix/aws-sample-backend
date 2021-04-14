@@ -1,7 +1,11 @@
-function handler(event, context, callback) {
-    return callback('hello world');
-}
+const serverless = require('serverless-http');
+const express = require('express');
+const app = express();
 
-module.exports = {
-    handler
-}
+app.get('/', function (req, res) {
+    res.send({
+        test: 'hello world'
+    })
+});
+
+module.exports.handler = serverless(app);
