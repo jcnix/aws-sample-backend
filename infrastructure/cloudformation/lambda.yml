@@ -84,10 +84,3 @@ Resources:
     Properties:
       RestApiId: !Ref "RestApi"
       StageName: ProdStage
-  ProdBasePathMapping:
-    Type: AWS::ApiGateway::BasePathMapping
-    Properties: 
-      BasePath: api
-      DomainName: !Ref ApiDomain
-      RestApiId: !Ref RestApi
-      Stage: ProdStage
