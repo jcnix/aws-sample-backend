@@ -8,4 +8,10 @@ app.get('/', function (req, res) {
     })
 });
 
+app.get('/version', function (req, res) {
+    res.send({
+        version: '1.0'
+    })
+});
+
 module.exports.handler = serverless(app);
