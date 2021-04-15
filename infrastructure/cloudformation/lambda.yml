@@ -48,6 +48,13 @@ Resources:
       Role: arn:aws:iam::965128151894:role/lambda-role
       Handler: app.handler
       Code: '../../bin'
+  LambdaApiGatewayInvoke:
+    Type: "AWS::Lambda::Permission"
+    Properties:
+      Action: "lambda:InvokeFunction"
+      FunctionName: !GetAtt "Application.Arn"
+      Principal: "apigateway.amazonaws.com"
+      SourceArn: !Sub "arn:aws:execute-api:us-east-1:965128151894:RestApi/*/*/*"
   RestApi:
     Type: AWS::ApiGateway::RestApi
     Properties:
