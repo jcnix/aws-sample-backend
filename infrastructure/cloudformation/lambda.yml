@@ -23,7 +23,7 @@ Resources:
             Principal: 
               AWS: 'arn:aws:iam::965128151894:user/jenkins'
   LambdaRole:
-    Type: 'AWS::IAM::Role'
+    Type: AWS::IAM::Role
     Properties:
       RoleName: 'lambda-role'
       ManagedPolicyArns:
@@ -59,13 +59,13 @@ Resources:
       CertificateArn: >-
         arn:aws:acm:us-east-1:965128151894:certificate/4efd51eb-512a-4061-88dd-30c57b66a7e0
   ProxyResource:
-    Type: 'AWS::ApiGateway::Resource'
+    Type: AWS::ApiGateway::Resource
     Properties:
       RestApiId: !Ref RestApi
       ParentId: !GetAtt RestApi.RootResourceId
       PathPart: '{proxy+}'
   ProxyResourceANY:
-    Type: 'AWS::ApiGateway::Method'
+    Type: AWS::ApiGateway::Method
     Properties:
       RestApiId: !Ref RestApi
       ResourceId: !Ref ProxyResource
@@ -77,3 +77,17 @@ Resources:
         Uri: !Sub
           - "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/${lambdaArn}/invocations"
           - lambdaArn: !GetAtt "Application.Arn"
+  RestApiDeployment:
+    Type: AWS::ApiGateway::Deployment
+    DependsOn:
+      - RestApi
+    Properties:
+      RestApiId: !Ref "RestApi"
+      StageName: prod
+  ProdBasePathMapping:
+    Type: AWS::ApiGateway::BasePathMapping
+    Properties: 
+      BasePath: api
+      DomainName: !Ref ApiDomain
+      RestApiId: !Ref RestApi
+      Stage: String
