@@ -48,3 +48,32 @@ Resources:
       Role: arn:aws:iam::965128151894:role/lambda-role
       Handler: app.handler
       Code: '../../bin'
+  RestApi:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: 'pizza-api-gateway'
+  ApiDomain:
+    Type: 'AWS::ApiGateway::DomainName'
+    Properties:
+      DomainName: api.jcnix.com
+      CertificateArn: >-
+        arn:aws:acm:us-east-1:965128151894:certificate/4efd51eb-512a-4061-88dd-30c57b66a7e0
+  ProxyResource:
+    Type: 'AWS::ApiGateway::Resource'
+    Properties:
+      RestApiId: !Ref RestApi
+      ParentId: !GetAtt RestApi.RootResourceId
+      PathPart: '{proxy+}'
+  ProxyResourceANY:
+    Type: 'AWS::ApiGateway::Method'
+    Properties:
+      RestApiId: !Ref RestApi
+      ResourceId: !Ref ProxyResource
+      HttpMethod: ANY
+      AuthorizationType: NONE
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri: !Sub
+          - "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/${lambdaArn}/invocations"
+          - lambdaArn: !GetAtt "Application.Arn"
